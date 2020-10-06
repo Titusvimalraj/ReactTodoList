@@ -4,7 +4,8 @@
 	"description": "This is the first react class",
 	"main": "index.js",
 	"scripts": {
-		"start": "parcel index.html"
+		"start": "npm install -g parcel-bundler && parcel index.html",
+		"dev": "parcel index.html"
 	},
 	"author": "Titus",
 	"license": "ISC",
