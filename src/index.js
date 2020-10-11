@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from 'react';
+import React, { Fragment, useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import List from './components/List';
 import Title from './components/Title';
@@ -14,6 +14,7 @@ const App = (props) => {
     ])
 
     const [priority, setPriority] = useState('All');
+
 
     const toggleTask = (taskIndex) => {
         setTasks(tasks.map((task, index) => {
@@ -34,6 +35,23 @@ const App = (props) => {
 
     const deleteTask = (deletedId) => {
         setTasks(tasks.filter((task, index) => deletedId !== index));
+    }
+
+    const updatePriority = (taskId) => {
+        setTasks(tasks.map((task, index) => {
+            if (taskId == index) {
+                let taskPriority = 'low';
+                if (task.priority == 'high') {
+                    taskPriority = 'low';
+                } else if (task.priority == 'med') {
+                    taskPriority = 'high';
+                } else if (task.priority == 'low') {
+                    taskPriority = 'med';
+                }
+                return { ...task, priority: taskPriority };
+            }
+            return task;
+        }));
     }
 
     const lowPriorityTasks = tasks.filter(task => task.priority == 'low');
@@ -61,7 +79,7 @@ const App = (props) => {
                 <InputField addNewTask={addNewTask} />
             </Spacer>
             {taskPriority}
-            <List items={tasks} filterValue={priority} toggleTask={toggleTask} deleteTask={deleteTask} />
+            <List updatePriority={updatePriority} items={tasks} filterValue={priority} toggleTask={toggleTask} deleteTask={deleteTask} />
 
             {/* {highPriorityTasks.length != 0 ? <span><h3 >High Priority Tasks</h3><List items={highPriorityTasks} onlyPresentation></List></span> : null}
             {medPriorityTasks.length != 0 ? <span><h3 >Med Priority Tasks</h3><List items={medPriorityTasks} onlyPresentation></List></span> : null}

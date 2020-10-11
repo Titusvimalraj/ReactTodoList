@@ -22,12 +22,17 @@ const List = props => {
                     const deleteTask = () => {
                         props.deleteTask(index);
                     }
+
+                    const updatePriority = () => {
+                        props.updatePriority(index);
+                    }
+
                     if (props.filterValue == 'All' || props.filterValue == task.priority) {
                         return (
                             <Fragment key={index}>
                                 <li style={{ margin: 15, display: 'flex', justifyContent: 'space-between' }}>
                                     <Spacer>
-                                        {priority}
+                                        <span className="cursor-pointer" onClick={updatePriority}>{priority}</span>
                                     </Spacer>
                                     <Spacer>
                                         <span className="task" onClick={!props.onlyPresentation ? onListClick : null}>
